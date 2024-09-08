@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        let timeout;
+        function debouncePopulateDiv(){ //debouncing
+            clearTimeout(timeout)
+            timeout = setTimeout(function(){
+                populateDiv()
+            },1000)
+        }
+
+        // populateDiv() and populateDiv2() are same with different syntax
+        function populateDiv(){
+            const a = parseInt(document.getElementById("firstnumber").value)
+            const b = parseInt(document.getElementById("secondnumber").value)
+            const element = document.getElementById("finalSum");
+            fetch(`http://localhost:3000/sum?a=${a}&b=${b}`)
+            .then((response)=>{
+                response.text()
+                .then((ans)=>{
+                    console.log(ans)
+                    element.innerHTML = ans;
+                })
+            })
+        }
+        async function populateDiv2(){
+            const a = parseInt(document.getElementById("firstnumber").value)
+            const b = parseInt(document.getElementById("secondnumber").value)
+            const element = document.getElementById("finalSum");
+            const response = await fetch(`http://localhost:3000/sum?a=${a}&b=${b}`);
+            const ans = await response.text()
+            element.innerHTML = ans;
+        }
+    </script>
+    <head>
+
+    </head>
+    <body>
+        <input oninput="debouncePopulateDiv()" id="firstnumber" type="text" placeholder="first number"></input><br></br>
+        <input oninput="debouncePopulateDiv()" id="secondnumber" type="text" placeholder="Second number"></input><br></br>
+        <!-- <button onclick="populateDiv2()">Calculate Sum</button><br></br> -->
+        <div id="finalSum"></div>
+    </body>
+</html>

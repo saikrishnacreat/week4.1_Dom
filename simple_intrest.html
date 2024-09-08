@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<htmL>
+    <head>
+        <script>
+            async function calIntrest(){
+                const principal = parseInt(document.getElementById("principal").value);
+                const time = parseInt(document.getElementById("time").value);
+                const rate = parseInt(document.getElementById("rate").value);
+                const element = document.getElementById("intrest_box");
+                const response = await fetch(`http://localhost:3003/intrest?principal=${principal}&time=${time}&rate=${rate}`)
+                const ans = await response.json();
+                document.getElementById("total").innerHTML = "total amount :"+ans.total;
+                element.innerHTML = "intrest :"+ans.intrest;
+              
+            }
+        </script>
+    </head>
+    <body>
+        <input id="principal" placeholder="principal" type="text"><br></br>
+        <input id="time" placeholder="time" type="text"><br></br>
+        <input id="rate" placeholder="rate" type="text"><br></br>
+        <button onclick="calIntrest()" >Calculate intrest</button><br></br>
+        <div id="total"></div><br><br>
+        <div id="intrest_box"></div><br><br>
+     
+    </body>
+</htmL>
